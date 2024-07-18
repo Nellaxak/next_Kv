@@ -1,0 +1,54 @@
+:root {
+  --bg-color-to-basket: #F86600;
+  --color-to-basket: #FFFFFF;
+  --bg-color-in-basket: #F8660026;
+  --color-in-basket: #F5DED9;
+  --bg-grey: #232526;
+  --bg-light-grey: #FFFFFF80;
+  --danger: #E3E5E5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /*user-select: none;*/
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body {
+  background-color: #000000;
+}
+
+@media screen and (orientation: landscape) {
+
+  #__next {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-areas:
+      "h h h h h h h h h h h h"
+      "m m m m m m m m m m m m";
+    column-gap: 24px;
+  }
+}
+
+@media screen and (orientation: portrait) {
+  body {
+    gap: 17px;
+    /*140-123=17*/
+  }
+
+  #__next {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "h"
+      "m";
+    column-gap: 24px;
+  }
+}
+
+button, a {
+  cursor: url('./icons8-pointer_1.svg'), auto;
+}
