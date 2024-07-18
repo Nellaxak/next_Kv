@@ -14,19 +14,22 @@ export default function BasketLayout({
     children: React.ReactNode
 }) {
     //<div id="emptyCount"></div>
+    //<div className={styles.wrapRow}>
 
     return (
-        <div className={styles.wrap}>
-            <div className={styles.wrapRow}>
-                <SVG />
-                <div className={styles.wrapColumn}>
+        <div className={styles.wrapLayout}>
+            <SVG />
+            <div className={styles.wrapRowRight}>
+                <div className={styles.wrapRow}>
                     <MessageClear />
-                    {children}
+                    <div className={styles.wrap}>
+                        {children}
+                    </div>
                 </div>
+                <footer className={styles.footer}>
+                    © Все права и планета защищены
+                </footer>
             </div>
-            <footer className={styles.footer}>
-                © Все права и планета защищены
-            </footer>
         </div>
 
     )

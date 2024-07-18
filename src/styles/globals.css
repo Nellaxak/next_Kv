@@ -34,11 +34,6 @@ body {
 }
 
 @media screen and (orientation: portrait) {
-  body {
-    gap: 17px;
-    /*140-123=17*/
-  }
-
   #__next {
     display: grid;
     grid-template-columns: 1fr;
@@ -46,6 +41,7 @@ body {
       "h"
       "m";
     column-gap: 24px;
+    row-gap: 17px;
   }
 }
 

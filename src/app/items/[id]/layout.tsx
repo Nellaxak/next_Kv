@@ -14,7 +14,7 @@ export default function BasketLayout({
     children: React.ReactNode
 }) {
     return (
-        <div id='detail' className={styles.item}>
+        <div className={styles.item}>
             {children}
         </div>
     )

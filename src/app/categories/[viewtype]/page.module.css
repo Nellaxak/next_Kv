@@ -1,5 +1,5 @@
  @media screen and (orientation: portrait) {
-   .wrap {
+   .wrapLayout {
      grid-area: m;
      max-width: 100%;
      display: grid;
@@ -16,7 +16,7 @@
  }
 
  @media screen and (orientation: landscape) {
-   .wrap {
+   .wrapLayout {
      grid-area: m;
      max-width: 100%;
      display: grid;
@@ -33,7 +33,7 @@
  }
 
  @media screen and (orientation: landscape) and (min-width: 1025px) {
-   .wrap {
+   .wrapLayout {
      grid-area: m;
      max-width: 100%;
      display: grid;
@@ -44,7 +44,7 @@
  }
 
  @media screen and (orientation: landscape) and (min-width: 1356px) {
-   .wrap {
+   .wrapLayout {
      grid-area: m;
      max-width: 100%;
      display: grid;

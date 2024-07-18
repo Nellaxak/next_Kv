@@ -43,7 +43,7 @@ const ListItem = (props: Props) => {
     danger = createElement('div', { className: styles.danger }, [imageDanger, phraseDanger])
   }
   const button = createElement(Button, item, null)
-  const diameterTag = createElement('span', [String(item.diameterView)], null)
+  const diameterTag = createElement('span', null, [String(item.diameterView)])
   const result_distance = createElement(Output, [String(item.result_distance)], null);
   const div_result_distance = createElement('div', { className: styles.middleStart }, result_distance);
   const linkTag = createElement(LinkComponent, { item }, null)

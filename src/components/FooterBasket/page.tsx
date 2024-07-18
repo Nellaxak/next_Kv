@@ -2,9 +2,6 @@ import { createElement, memo } from "react";
 import styles from "./page.module.css";
 import ButtonClear from '../ButtonClear/page'
 import Output from '../Output/page'
-//import Phrase from '../Phrase/page'
-//import PhraseProps, { ClassName, Children } from '@/types/PhraseProps'
-
 
 export interface Item {
   valueCount: number,

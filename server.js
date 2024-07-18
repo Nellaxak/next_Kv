@@ -7,7 +7,6 @@ var { getRxStorageMemory } = require('rxdb/plugins/storage-memory')
 var { RxDBUpdatePlugin } = require('rxdb/plugins/update');
 
 addRxPlugin(RxDBUpdatePlugin);
-//const str = '191'
 
 const app = express();
 app.use(function (req, res, next) {
@@ -36,9 +35,6 @@ const expressServer = app.listen(port, hostname, async () => {
   db = await createRxDatabase({
     name: 'exampledb',
     storage: getRxStorageMemory(),
-    //storage: getRxStorageMongoDB({
-    //connection: 'mongodb://localhost:27017,localhost:27018,localhost:27019'
-    //}),
     ignoreDuplicate: true,
     eventReduce: true,
   });
@@ -73,7 +69,6 @@ const expressServer = app.listen(port, hostname, async () => {
   await db.addCollections({
     records: {
       schema: recordShema,
-      //conflictHandler: myCustomConflictHandler,
     },
   });
   console.log('listen', port);
@@ -108,34 +103,31 @@ function elem(e, dates) {
     minute: 'numeric',
     second: 'numeric'*/
   };
-  //const prevDate = date.toLocaleString("ru", options)
   const prevDate = new Intl.DateTimeFormat("ru-RU", options).format(date);
   //console.log('sent', new Intl.DateTimeFormat("ru-RU", options).format(sent))
   const dat1 = prevDate.slice(0, -2)
   const dat = dat1.replace('.', '');
   const ru = new Intl.NumberFormat("ru", { style: "unit", unit: "kilometer", unitDisplay: "short" }).format(km);
-  const ru1 = new Intl.NumberFormat("ru", { style: "decimal" }).format(moon);
+  const ruNumber = new Intl.NumberFormat("ru", { style: "decimal" }).format(moon);
   let map = new Map();
-  map.set(/[1]$/, ["ая", "а"]);
   map.set(/0|[5-9]$/, ["ых", ""]);
   map.set(/[2-4]$/, ["ые", "ы"]);
   map.set(/\d?[1][0-9]$/, ["ых", ""]);//10,11-19
   map.set(/\d?[1-9][0]{1,9}$/, ["ых", ""]);//20-90,100-900
+  map.set(/[1]$/, ["ая", "а"]);
 
   const rootMoon = "лунн"
   const rootOrbit = "орбит"
   let allR = ''
-  map.forEach((value, key, map) => {
-    const result = ru1.match(key)
+  map.forEach((value, key) => {
+    const result = ruNumber.match(key)
     if (result !== null) {
       allR = rootMoon + value[0] + " " + rootOrbit + value[1]
     }
   })
-  const ruMoon = ru1 + " " + allR
+  const ruMoon = ruNumber + " " + allR
   const ruD = new Intl.NumberFormat("ru", { style: "unit", unit: "meter", unitDisplay: "short" }).format(ddd);
-  //console.log('dat', ruD)
   let danger = ''
-  //  console.log('Emoji', Emoji)
   if (e.is_potentially_hazardous_asteroid) {
     danger = 'Опасен'
   }

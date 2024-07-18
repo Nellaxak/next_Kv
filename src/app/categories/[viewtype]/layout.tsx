@@ -13,7 +13,7 @@ export default function ParallelLayout({
 }) {
 
   return (
-    <div className={styles.wrap}>
+    <div className={styles.wrapLayout}>
       <SVG />
       {children}
       <main className={styles.wrapRowRight}>

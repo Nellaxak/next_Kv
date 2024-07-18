@@ -4,7 +4,6 @@
   display: flex;
   flex-direction: column;
   height: 112px;
-  gap: 10px;
 }
 
 .h2 {
@@ -18,6 +17,7 @@
 .middle {
   display: flex;
   gap: 0.5em;
+  height: 40px;
 }
 
 .middleEnd {
@@ -67,7 +67,7 @@
   display: flex;
   justify-content: flex-start;
   gap: 4px;
-  height: 20px;
+  height: 14px;
   color: var(--danger);
   ;
 }

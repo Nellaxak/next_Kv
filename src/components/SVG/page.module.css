@@ -8,7 +8,7 @@
 
     .image_wrapper>img {
         object-fit: cover;
-        object-position: top 0px right 0;
+        object-position: bottom 16px right 0;
     }
 }
 

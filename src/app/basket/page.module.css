@@ -1,46 +1,66 @@
 .footer {
-  padding: 1em;
-  position: absolute;
-  width: 100%;
+  left: 0px;
   bottom: 0px;
+  position: fixed;
+  display: flex;
   font-family: 'Helvetica';
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
+  padding: 16px;
+  width: 100%;
   color: var(--color-to-basket);
 }
 
-/*.wrapRowRight{
-    display: flex;
-    flex-wrap: wrap;
-  }*/
 @media screen and (orientation: portrait) {
+  .wrapLayout {
+    grid-area: m;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: minmax(48px, 1fr) 279px 1fr;
+    grid-template-rows: 9px 1fr;
+    column-gap: 24px;
+  }
+
+  .wrapRowRight {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    display: flex;
+    flex-direction: column;
+  }
+
   .wrap {
     display: flex;
-    flex-wrap: wrap;
     flex-direction: column;
     padding: 0px;
     gap: 24px;
-
   }
 
   .wrapRow {
-    flex: 0 0 48px;
-    display: flex;
-    gap: 24px;
-
-  }
-
-  .wrapColumn {
-    flex: 0 0 279px;
+    flex-basis: 279px;
     display: flex;
     flex-direction: column;
-
+    gap: 25px;
   }
 }
 
 @media screen and (orientation: landscape) {
+  .wrapLayout {
+    grid-area: m;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: minmax(48px, 1fr) 402px 150px;
+    grid-template-rows: 9px 1fr;
+    column-gap: 24px;
+  }
+
+  .wrapRowRight {
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    display: flex;
+  }
+
   .wrap {
     display: flex;
     flex-direction: column;
@@ -50,12 +70,30 @@
 
   .wrapRow {
     display: flex;
-    flex: 0 0 402px;
-  }
-
-  .wrapColumn {
-    flex: 0 0 402px;
-    display: flex;
     flex-direction: column;
+    flex: 0 0 402px;
+    gap: 24px;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 1025px) {
+  .wrapLayout {
+    grid-area: m;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: minmax(304px, 1fr) 402px 1fr;
+    grid-template-rows: 9px 1fr;
+    grid-column-gap: 58px;
+  }
+}
+
+@media screen and (orientation: landscape) and (min-width: 1356px) {
+  .wrapLayout {
+    grid-area: m;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: minmax(400px, 1fr) 402px 1fr;
+    grid-template-rows: 9px 1fr;
+    grid-column-gap: 128px;
   }
 }

@@ -3,47 +3,30 @@ import {
     NextPage
 } from 'next';
 import { createElement, memo } from "react";
-
-//import safe from '@/public/images/safe.svg';
-//import Button from '@/components/Button/page';
 import ListItem from '@/components/ListItem/page';
 import ListRowDetail from '@/components/ListRowDetail/page';
-
-//import styles from "./ListItem.module.css";
-//import Image from 'next/image';
-//import ItemsProps from '../../../types/interfaces/items';
-//import Router, { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Metadata, ResolvingMetadata } from 'next'
 import Item from '@/types/Item'
+import ListDetail from '@/types/ListDetail'
 import HeaderDetail from '@/types/HeaderDetail'
+
 
 type Props = {
     params: { id: string }
     searchParams: { [key: string]: string | string[] | undefined }
 }
-//const alt = "Степень опасности астероида."
 
-/*const img = createElement(Image, {
-    key: 3, src: safe, alt: alt, priority: true
-})*/
 export async function generateMetadata(
     { params, searchParams }: Props,
     parent: ResolvingMetadata
 ): Promise<Metadata> {
-    //console.log('detail metadata', params)
-    // read route params
     const id = params.id
-
     // fetch data
-    const item = await fetch(`http://localhost:3456/detail?id=${id}`,
+    const item: [HeaderDetail, ListDetail[]] = await fetch(`http://localhost:3456/detail?id=${id}`,
     ).then((res) => res.json())
-    // optionally access and extend (rather than replace) parent metadata
-    //const previousImages = (await parent).openGraph?.images || []
+    //console.log('detail meta', item)
     return {
-        title: item.name,
-        /*openGraph: {
-          images: ['/some-specific-page-image.jpg', ...previousImages],
-        },*/
+        title: item[0].name,
     }
 }
 /*async function http(
@@ -51,8 +34,9 @@ export async function generateMetadata(
     id: string,
 ): Promise<any> {
     try {
-        const response = await fetch(`http://localhost:3456/detail?id=${id}`
-        );
+        const response = await fetch(`http://localhost:3456/detail?id=${id}`, {
+            cache: "no-store",
+        });
         console.log('status', response.status)
         const body = await response.json();
         return body;
@@ -78,11 +62,4 @@ const getDetails = async ({ params }: Props) => {
     )
 
 }
-/*Page.getLayout = function getLayout(page: any) {
-    return (
-        //<Layout>
-        <MainPageLayout>{page}</MainPageLayout>
-        //</Layout>
-    )
-}*/
-export default getDetails//memo
+export default getDetails
