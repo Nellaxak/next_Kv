@@ -54,8 +54,6 @@ const expressServer = app.listen(port, hostname, async () => {
       is_sentry_object: { type: 'boolean' },
       sentry_data: { type: 'string', maxLength: 100 },
       dateReq: { type: 'string', maxLength: 100 },
-      /*miss_distance_lunar: { type: 'number' },
-      miss_distance_kilometers: { type: 'number' },*/
       result_distance: { type: 'number' },
       danger: { type: 'number' },
       km_moon: { type: 'number' },
@@ -81,7 +79,13 @@ const io = new Server(expressServer, {
 })
 const newList = []
 
-function elem(e, dates) {
+function elem(e) {
+  /*try {
+    console.log('e', e)
+  }
+  catch (err) {
+    console.log('err', err)
+  }*/
   //const sent = new Date(2024, 9, 1);
   const date = new Date(e.close_approach_data[0].epoch_date_close_approach)
   const dateSort =
@@ -89,8 +93,14 @@ function elem(e, dates) {
   const miss = e.close_approach_data[0].miss_distance
   const km = Math.round(Number(miss.kilometers))
   const moon = Math.round(Number(miss.lunar))
-  const diameterMeter = e.estimated_diameter.meters.estimated_diameter_max;
-  const ddd = Math.round(diameterMeter)
+  let diameterMeter
+  try {
+    diameterMeter = e.estimated_diameter.meters.estimated_diameter_max;
+  }
+  catch {
+    diameterMeter = 0
+  }
+  const roundDiameter = Math.round(diameterMeter)
   const options = {
     /*era: 'long',*/
     year: 'numeric',
@@ -105,8 +115,8 @@ function elem(e, dates) {
   };
   const prevDate = new Intl.DateTimeFormat("ru-RU", options).format(date);
   //console.log('sent', new Intl.DateTimeFormat("ru-RU", options).format(sent))
-  const dat1 = prevDate.slice(0, -2)
-  const dat = dat1.replace('.', '');
+  const datSlice = prevDate.slice(0, -2)
+  const dat = datSlice.replace('.', '');
   const ru = new Intl.NumberFormat("ru", { style: "unit", unit: "kilometer", unitDisplay: "short" }).format(km);
   const ruNumber = new Intl.NumberFormat("ru", { style: "decimal" }).format(moon);
   let map = new Map();
@@ -118,15 +128,15 @@ function elem(e, dates) {
 
   const rootMoon = "лунн"
   const rootOrbit = "орбит"
-  let allR = ''
+  let fullResult = ''
   map.forEach((value, key) => {
     const result = ruNumber.match(key)
     if (result !== null) {
-      allR = rootMoon + value[0] + " " + rootOrbit + value[1]
+      fullResult = rootMoon + value[0] + " " + rootOrbit + value[1]
     }
   })
-  const ruMoon = ruNumber + " " + allR
-  const ruD = new Intl.NumberFormat("ru", { style: "unit", unit: "meter", unitDisplay: "short" }).format(ddd);
+  const ruMoon = ruNumber + " " + fullResult
+  const ruDiameter = new Intl.NumberFormat("ru", { style: "unit", unit: "meter", unitDisplay: "short" }).format(roundDiameter);
   let danger = ''
   if (e.is_potentially_hazardous_asteroid) {
     danger = 'Опасен'
@@ -138,7 +148,7 @@ function elem(e, dates) {
     result_distance: ru,
     km_moon: 1,
     idView: e.id,
-    diameterView: 'Ø ' + ruD,
+    diameterView: 'Ø ' + ruDiameter,
     dangerView: danger,
     dateSort: dateSort,
   }
@@ -150,7 +160,7 @@ function elem(e, dates) {
     result_distance: ruMoon,
     km_moon: 0,
     idView: e.id,
-    diameterView: 'Ø ' + ruD,
+    diameterView: 'Ø ' + ruDiameter,
     dangerView: danger,
     dateSort: dateSort,
   }
@@ -200,19 +210,11 @@ io.on('connection', (socket) => {
     //controller.abort()
   })
   let count = new Counter(socket)
-  //let countMoon = new Counter(socket)
   socket.on('addPage', async () => {
     console.log('ws server add page')
     let startDate
     let endDate
-    //if (path === '/main') {
     [startDate, endDate] = await count.CalcData()
-    //console.log('startDate', startDate, endDate)
-    /*}
-    else if (path === '/CalcMoon') {
-      [startDate, endDate] = await countMoon.CalcData()
-      console.log('aq', startDate, endDate)
-    }*/
     try {
       const resp = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=3wa5hHgFuqhf6XiefvqzkcDQWZ01aOOK4vNZEXsP`);
       console.log('status34', resp.status)
@@ -236,15 +238,16 @@ io.on('connection', (socket) => {
     let ids
     if (data.includes('_')) {
       const newData = data.slice(0, data.length - 1)
-      ids = [data, newData]
+      ids = [newData, data]
     }
     else {
       ids = [data, data + '_']
     }
+    console.log('patch ids', ids)
     const query = await db.records.findByIds(ids)
     const changeRecord = await query.exec()
     for (let elem of changeRecord.entries()) {
-      //console.log('ids', elem[1].danger);
+      //console.log('ids', elem);
       const oldStatus = elem[1].danger
       await elem[1].incrementalPatch(
         {
