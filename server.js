@@ -243,7 +243,7 @@ io.on('connection', (socket) => {
     else {
       ids = [data, data + '_']
     }
-    console.log('patch ids', ids)
+    //console.log('patch ids', ids)
     const query = await db.records.findByIds(ids)
     const changeRecord = await query.exec()
     for (let elem of changeRecord.entries()) {
