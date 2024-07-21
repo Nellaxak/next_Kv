@@ -319,7 +319,7 @@ app.get('/detail', cors(corsOptions), async (req, res, next) => {
   const resp = await fetch(`https://api.nasa.gov/neo/rest/v1/neo/${id}?api_key=3wa5hHgFuqhf6XiefvqzkcDQWZ01aOOK4vNZEXsP`);
   console.log('status34', resp.status)
   const data = await resp.json()
-  //console.log('data length', data.close_approach_data)
+  //console.log('detail length', data.close_approach_data)
   const ids = [req.query.id]
   const query = await db.records.findByIds(ids)
   const changeRecord = await query.exec()

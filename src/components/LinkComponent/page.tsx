@@ -14,7 +14,7 @@ const LinkComponent = (props: Props) => {
   const link = createElement(Link, {
     className: styles.link,
     href: `/items/${item.idView}`,
-    scroll: false,
+    //scroll: false,
   }, item.name)
   return (
     link

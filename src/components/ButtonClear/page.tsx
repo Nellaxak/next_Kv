@@ -5,7 +5,7 @@ const ButtonClear = () => {
     return (
         <nav>
             <Link href="/basket"
-                scroll={false}
+                //scroll={false}
                 className={styles.button}
             >
                 <span className={styles.padding}>Отправить</span>
