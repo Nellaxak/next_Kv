@@ -1,7 +1,7 @@
 'use client'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect } from "react";
-
+import dynamic from 'next/dynamic'
 import io from 'socket.io-client';
 
 const socket = io('ws://localhost:3456')
@@ -42,4 +42,5 @@ const IOComponent = () => {
     return null
     //(<></>)
 }
-export default IOComponent
+//export default IOComponent
+export default dynamic(() => Promise.resolve(IOComponent), { ssr: false });

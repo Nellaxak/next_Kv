@@ -4,6 +4,7 @@ import styles from "./page.module.css";
 import dynamic from 'next/dynamic'
 //import Phrase from '../Phrase/page';
 import Props from '@/types/Props'
+import MyComponentProps from '@/types/MyComponentProps'
 
 /*const Dynamiclink = dynamic(() => import('../components/header'), {
   loading: () => <p>Loading...</p>,
@@ -11,8 +12,7 @@ import Props from '@/types/Props'
 //export const dynamic = "force-dynamic"
 
 const ListItemDetail = (props: Props) => {
-  const { item, keys } = { ...props }
-  //console.log('1axsf', item)
+  const item = props.item
   const velocity = item.relative_velocity.kilometers_per_second
   const date = new Date(item.epoch_date_close_approach);
   const hours = date.getUTCHours()
@@ -27,8 +27,9 @@ const ListItemDetail = (props: Props) => {
     ["Скорость км/сек: " + velocity])
   const phraseOrbitingBody = createElement('span', null,
     ["Орбита: " + item.orbiting_body])
-  const liTag = createElement('li', { key: keys, className: styles.li },
+  const liTag = createElement('li', { key: item.epoch_date_close_approach, className: styles.li },
     [phraseDate, phraseTime, phraseVelocity, phraseOrbitingBody])
   return liTag
 };
 export default memo(ListItemDetail)
+//export default dynamic<MyComponentProps>(() => Promise.resolve(ListItemDetail), { ssr: true });

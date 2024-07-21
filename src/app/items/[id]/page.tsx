@@ -1,15 +1,9 @@
-import {
-    GetServerSideProps, GetServerSidePropsContext,
-    NextPage
-} from 'next';
-import { createElement, memo } from "react";
-import ListItem from '@/components/ListItem/page';
 import ListRowDetail from '@/components/ListRowDetail/page';
 import { Metadata, ResolvingMetadata } from 'next'
 import Item from '@/types/Item'
 import ListDetail from '@/types/ListDetail'
 import HeaderDetail from '@/types/HeaderDetail'
-
+import HttpResponse from '@/types/HttpResponse'
 
 type Props = {
     params: { id: string }
@@ -29,37 +23,28 @@ export async function generateMetadata(
         title: item[0].name,
     }
 }
-/*async function http(
-    //request: RequestInfo,
-    id: string,
-): Promise<any> {
+
+async function http<T>(
+    request: RequestInfo,
+): Promise<[HeaderDetail, Item[]] | unknown> {
     try {
-        const response = await fetch(`http://localhost:3456/detail?id=${id}`, {
+        const response: HttpResponse<T> = await fetch(
+            request, {
             cache: "no-store",
         });
-        console.log('status', response.status)
-        const body = await response.json();
-        return body;
+        const parsedBody: [HeaderDetail, Item[]] = await response.json();
+        return parsedBody;
     }
-    catch (err) {
+    catch (err: unknown) {
         console.log('err', err)
     }
-}*/
-
+}
 const getDetails = async ({ params }: Props) => {
     const id = params.id
+    const res = await http<[HeaderDetail, Item[]]>(`http://localhost:3456/detail?id=${id}`) as [HeaderDetail, Item[]];
 
-    const res = await fetch(`http://localhost:3456/detail?id=${id}`, {
-        cache: "no-store",
-    });
-    //const res = await http(id);
-    if (res.status !== 200) {
-        throw new Error('Failed to fetch')
-    }
-    const items: [HeaderDetail, Item[]] = await res.json()
     return (
-        <ListRowDetail header={items[0]} items={items[1]} />
+        <ListRowDetail header={res[0]} items={res[1]} />
     )
-
 }
 export default getDetails

@@ -28,4 +28,10 @@
     background: var(--bg-color-in-basket);
     border-radius: 16px;
     color: var(--color-in-basket);
+    touch-action: auto;
+}
+
+.buttonInBasket:hover {
+    background: var(--bg-color-to-basket);
+    color: var(--color-to-basket);
 }

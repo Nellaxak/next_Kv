@@ -1,16 +1,27 @@
 import FooterBasket from '@/components/FooterBasket/page';
-//import FooterMobile from '@/components/FooterMobile/page';
+import HttpResponse from '@/types/HttpResponse'
 
 export interface Count {
   count: number;
 }
-async function Page({ params }) {
-  const viewtype: string = params.viewtype
+async function http<T>(
+  request: RequestInfo,
+): Promise<Count | unknown> {
+  try {
+    const response: HttpResponse<T> = await fetch(
+      request, {
+      cache: "no-store",
+    });
+    const parsedBody: Count = await response.json();
+    return parsedBody;
+  }
+  catch (err: unknown) {
+    console.log('err', err)
+  }
+}
+async function Page() {
+  const value = await http<Count>('http://localhost:3456/count') as Count;
 
-  const res = await fetch('http://localhost:3456/count', {
-    cache: "no-store"
-  });
-  const value: Count = await res.json()
   return (
     <FooterBasket valueCount={value.count} />
   )

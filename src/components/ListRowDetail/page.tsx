@@ -6,9 +6,10 @@ import dynamic from 'next/dynamic'
 
 import Item from '@/types/Item'
 import HeaderDetail from '@/types/HeaderDetail'
+import MyComponentProps from '@/types/MyComponentProps'
 
-const DynamicItem = dynamic(() => import('../ListItemDetail/page'), {
-    loading: () => <span>Loading...</span>,
+const DynamicItem = dynamic<MyComponentProps>(() => import('../ListItemDetail/page'), {
+    loading: () => <span>Loading...</span>, ssr: true
 })
 
 export interface Props {
@@ -30,9 +31,9 @@ const ListRowDetail = (props: Props) => {
                 <ul className={styles.row}>
                     <For of={items} as={
                         (item, index) => {
-                            //console.log('detail list', index.key)
+                            //console.log('detail list', item)
                             return (
-                                <DynamicItem item={item} keys={index.key} />
+                                <DynamicItem item={item} />
                             )
                         }
                     }

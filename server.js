@@ -79,13 +79,7 @@ const io = new Server(expressServer, {
 })
 const newList = []
 
-function elem(e) {
-  /*try {
-    console.log('e', e)
-  }
-  catch (err) {
-    console.log('err', err)
-  }*/
+async function elem(e) {
   //const sent = new Date(2024, 9, 1);
   const date = new Date(e.close_approach_data[0].epoch_date_close_approach)
   const dateSort =
@@ -174,7 +168,6 @@ class Counter {
   constructor(socket) {
     this.count = 0;
     this.socket = socket;
-    //this.path = path;
   }
   Success(result) {
     // console.log('result', result.success.length)
@@ -221,7 +214,6 @@ io.on('connection', (socket) => {
       const data = await resp.json()
       console.log('data', data.element_count)
       const list = data.near_earth_objects
-      //console.log('list', list)
       const dates = Object.keys(list)
       const arrObjects = Object.values(list)
       await Promise.all(arrObjects[0].map(
