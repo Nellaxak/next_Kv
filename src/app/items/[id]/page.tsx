@@ -3,7 +3,7 @@ import { Metadata, ResolvingMetadata } from 'next'
 import Item from '@/types/Item'
 import ListDetail from '@/types/ListDetail'
 import HeaderDetail from '@/types/HeaderDetail'
-import HttpResponse from '@/types/HttpResponse'
+import http from '@/utils/http'
 
 type Props = {
     params: { id: string }
@@ -24,21 +24,6 @@ export async function generateMetadata(
     }
 }
 
-async function http<T>(
-    request: RequestInfo,
-): Promise<[HeaderDetail, Item[]] | unknown> {
-    try {
-        const response: HttpResponse<T> = await fetch(
-            request, {
-            cache: "no-store",
-        });
-        const parsedBody: [HeaderDetail, Item[]] = await response.json();
-        return parsedBody;
-    }
-    catch (err: unknown) {
-        console.log('err', err)
-    }
-}
 const getDetails = async ({ params }: Props) => {
     const id = params.id
     const res = await http<[HeaderDetail, Item[]]>(`http://localhost:3456/detail?id=${id}`) as [HeaderDetail, Item[]];
