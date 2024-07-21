@@ -1,4 +1,3 @@
-import Item from '@/types/Item'
 import HttpResponse from '@/types/HttpResponse'
 export default async function http<T>(
   request: RequestInfo,

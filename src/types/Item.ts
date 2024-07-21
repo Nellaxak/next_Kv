@@ -1,11 +1,6 @@
-import RelativeVelocity from '@/types/RelativeVelocity'
+import RelativeVelocity from './RelativeVelocity'
+import Aster from './Aster'
 
-export interface Meters {
-  estimated_diameter_min: number
-}
-export interface Aster {
-  meters: Meters
-}
 export default interface Item {
   id: number;
   name: string;

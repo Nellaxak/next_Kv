@@ -27,7 +27,6 @@ export async function generateMetadata(
 const getDetails = async ({ params }: Props) => {
     const id = params.id
     const res = await http<[HeaderDetail, Item[]]>(`http://localhost:3456/detail?id=${id}`) as [HeaderDetail, Item[]];
-
     return (
         <ListRowDetail header={res[0]} items={res[1]} />
     )

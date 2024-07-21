@@ -1,15 +1,5 @@
-import CloseApproach from '@/types/CloseApproach'
-
-export interface Meters {
-  estimated_diameter_min: number;
-  estimated_diameter_max: number;
-}
-export interface Aster {
-  meters: Meters;
-  kilometers:Meters;
-  miles:Meters;
-  feet:Meters;
-}
+import CloseApproach from './CloseApproach'
+import Aster from './Aster'
 
 export default interface ItemFull {
   links: {};
@@ -17,8 +7,7 @@ export default interface ItemFull {
   neo_reference_id: string;
   name: string;
   nasa_jpl_url: string;
-  absolute_magnitude_h: number;
-  
+  absolute_magnitude_h: number; 
   estimated_diameter: Aster;
 is_potentially_hazardous_asteroid: boolean;
 close_approach_data: CloseApproach[];
@@ -27,9 +16,6 @@ close_approach_data: CloseApproach[];
     kilometers_per_hour: string;
     miles_per_hour: string;
   };
-  //close_approach_date: string;
-  //epoch_date_close_approach: number;
-//orbiting_body:string;
  is_sentry_object: boolean;
  danger: number;
   idView: number;
