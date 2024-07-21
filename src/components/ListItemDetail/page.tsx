@@ -1,8 +1,6 @@
 import { createElement, memo } from "react";
 import styles from "./page.module.css";
-
 import dynamic from 'next/dynamic'
-//import Phrase from '../Phrase/page';
 import Props from '@/types/Props'
 import MyComponentProps from '@/types/MyComponentProps'
 

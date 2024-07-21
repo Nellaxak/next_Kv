@@ -11,7 +11,6 @@ import Output from '../Output/page';
 import ImageComponent from '../ImageComponent/page';
 
 import LinkComponent from '../LinkComponent/page';
-//import Item from '@/types/Item'
 import IImage from '@/types/IImage'
 import MyComponentProps from '@/types/MyComponentProps'
 
@@ -21,7 +20,7 @@ import MyComponentProps from '@/types/MyComponentProps'
 /*const DynamicButton = dynamic<MyComponentProps>(() => import('../Button/page'), {
   ssr: false
 })*/
-const ListItem: React.FC<MyComponentProps> = (props: MyComponentProps) => {
+const ListItem: React.FC<MyComponentProps> = (props) => {
   const item = props.item
   //console.log('ListItem', item.estimated_diameter)
   let objDanger: IImage;

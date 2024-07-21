@@ -1,4 +1,4 @@
-import RelativeVelocity from '@/types/RelativeVelocity'
+import RelativeVelocity from './RelativeVelocity'
 
 export default interface CloseApproach {
   close_approach_date: string;

@@ -2,7 +2,7 @@ import RelativeVelocity from './RelativeVelocity'
 import Aster from './Aster'
 
 export default interface Item {
-  id: number;
+  id: string;
   name: string;
   danger: number;
   idView: number;

@@ -1,5 +1,5 @@
-import RelativeVelocity from '@/types/RelativeVelocity'
-import MissDistance from '@/types/MissDistance'
+import RelativeVelocity from './RelativeVelocity'
+import MissDistance from './MissDistance'
 
 export default interface ListDetail{
 close_approach_date: string,

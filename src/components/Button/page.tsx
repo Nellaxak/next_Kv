@@ -8,11 +8,11 @@ import dynamic from 'next/dynamic'
 import MyComponentProps from '@/types/MyComponentProps'
 
 const socket = io('ws://localhost:3456')
-export interface Item {
+/*export interface Item {
     id: number,
     danger: number
-}
-const Button = (props: MyComponentProps) => {
+}*/
+const Button: React.FC<MyComponentProps> = (props) => {
     let status: string[] = ['ЗАКАЗАТЬ']
     let outputTag: React.ReactNode
     let buttonTag: React.ReactNode
