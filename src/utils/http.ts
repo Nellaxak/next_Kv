@@ -2,7 +2,7 @@ import Item from '@/types/Item'
 import HttpResponse from '@/types/HttpResponse'
 export default async function http<T>(
   request: RequestInfo,
-): Promise<Item[] | unknown> {
+): Promise<T | unknown> {
   try {
     const response: HttpResponse<T> = await fetch(
       request, {
