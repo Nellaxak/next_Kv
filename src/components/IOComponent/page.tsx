@@ -8,7 +8,7 @@ const socket = io('ws://localhost:3456')
 const options = {
     root: null,
     rootMargin: "100px",
-    threshold: 0.1,
+    threshold: 1.0,
 }
 
 const IOComponent = () => {
@@ -27,6 +27,7 @@ const IOComponent = () => {
         }
     }, []);
     useEffect(() => {
+        socket.emit('addPage')
         const observer = new IntersectionObserver(callbackFunction, options);
         const el = document.querySelector("#forScroll") as HTMLElement;
         observer.observe(el);

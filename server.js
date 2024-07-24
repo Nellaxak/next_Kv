@@ -204,15 +204,16 @@ io.on('connection', (socket) => {
   })
   let count = new Counter(socket)
   socket.on('addPage', async () => {
-    console.log('ws server add page')
+    //console.log('ws server add page')
     let startDate
     let endDate
     [startDate, endDate] = await count.CalcData()
+    //console.log('dates fetch', startDate, endDate)
     try {
       const resp = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=3wa5hHgFuqhf6XiefvqzkcDQWZ01aOOK4vNZEXsP`);
-      console.log('status34', resp.status)
+      //console.log('status34', resp.status)
       const data = await resp.json()
-      console.log('data', data.element_count)
+      //console.log('data', data.element_count)
       const list = data.near_earth_objects
       const dates = Object.keys(list)
       const arrObjects = Object.values(list)

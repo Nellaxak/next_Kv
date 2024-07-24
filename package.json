@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest"
   },
   "dependencies": {
     "@html-validate/eslint-config": "^5.12.4",
@@ -22,6 +23,8 @@
     "socket.io-client": "^4.7.2"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.6",
+    "@testing-library/react": "^16.0.0",
     "@types/node": "20.9.0",
     "@types/react": "18.2.37",
     "autoprefixer": "^10.4.19",
@@ -29,6 +32,8 @@
     "eslint-config-next": "14.0.4",
     "eslint-plugin-html": "^7.1.0",
     "html-validate": "^8.8.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "typescript": "5.2.2"
   }
 }

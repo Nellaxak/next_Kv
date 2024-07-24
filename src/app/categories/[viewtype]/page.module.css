@@ -39,7 +39,7 @@
      display: grid;
      grid-template-columns: minmax(304px, 1fr) 402px 1fr;
      grid-template-rows: 9px 1fr;
-     grid-column-gap: 58px;
+     column-gap: 58px;
    }
  }
 
@@ -50,6 +50,6 @@
      display: grid;
      grid-template-columns: minmax(400px, 1fr) 402px 1fr;
      grid-template-rows: 9px 1fr;
-     grid-column-gap: 128px;
+     column-gap: 128px;
    }
  }

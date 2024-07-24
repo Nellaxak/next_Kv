@@ -15,7 +15,7 @@ export default function Layout(props: {
   children: React.ReactNode,
 }) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <body>
         <div id='__next'>
           <HeaderTop />
