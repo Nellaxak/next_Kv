@@ -20,7 +20,8 @@
     "rxdb": "^14.17.1",
     "sharp": "^0.33.4",
     "socket.io": "^4.7.2",
-    "socket.io-client": "^4.7.2"
+    "socket.io-client": "^4.7.2",
+    "stream": "^0.0.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.6",

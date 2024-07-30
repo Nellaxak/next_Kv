@@ -1,4 +1,5 @@
 var express = require('express');
+var { Readable } = require('stream');
 //var serveStatic = require('serve-static');
 var cors = require('cors');
 var { Server } = require('socket.io');
@@ -196,7 +197,7 @@ class Counter {
     //return { startDate, endDate }
   }
 }
-
+const decoder = new TextDecoder();
 io.on('connection', (socket) => {
   socket.on('stop', () => {
     console.log('ws server stop')
@@ -211,9 +212,18 @@ io.on('connection', (socket) => {
     //console.log('dates fetch', startDate, endDate)
     try {
       const resp = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=3wa5hHgFuqhf6XiefvqzkcDQWZ01aOOK4vNZEXsP`);
-      //console.log('status34', resp.status)
-      const data = await resp.json()
-      //console.log('data', data.element_count)
+      const reader = resp.body.getReader();
+      let done = false;
+      let valueString = ''
+      while (!done) {
+        const { value, done: doneReading } = await reader.read();
+        done = doneReading;
+        valueString = valueString + decoder.decode(value)
+      }
+      //all
+      const data = JSON.parse(valueString);
+      //const data = await resp.json()
+      //console.log('data', data)
       const list = data.near_earth_objects
       const dates = Object.keys(list)
       const arrObjects = Object.values(list)
@@ -318,8 +328,18 @@ app.get('/detail', cors(corsOptions), async (req, res, next) => {
   //console.log('get detail', req.query.id)
   const id = req.query.id
   const resp = await fetch(`https://api.nasa.gov/neo/rest/v1/neo/${id}?api_key=3wa5hHgFuqhf6XiefvqzkcDQWZ01aOOK4vNZEXsP`);
-  console.log('status34', resp.status)
-  const data = await resp.json()
+  //console.log('status34', resp.status)
+  const reader = resp.body.getReader();
+  let done = false;
+  let valueString = ''
+  while (!done) {
+    const { value, done: doneReading } = await reader.read();
+    done = doneReading;
+    valueString = valueString + decoder.decode(value)
+  }
+  //all
+  const data = JSON.parse(valueString);
+  //const data = await resp.json()
   //console.log('detail length', data.close_approach_data)
   const ids = [req.query.id]
   const query = await db.records.findByIds(ids)
