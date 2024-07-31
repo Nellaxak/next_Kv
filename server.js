@@ -198,6 +198,19 @@ class Counter {
   }
 }
 const decoder = new TextDecoder();
+async function StreamReader(resp) {
+  const reader = resp.body.getReader();
+  let done = false;
+  let valueString = ''
+  while (!done) {
+    const { value, done: doneReading } = await reader.read();
+    done = doneReading;
+    valueString = valueString + decoder.decode(value)
+  }
+  //all
+  const data = JSON.parse(valueString);
+  return data
+}
 io.on('connection', (socket) => {
   socket.on('stop', () => {
     console.log('ws server stop')
@@ -212,18 +225,9 @@ io.on('connection', (socket) => {
     //console.log('dates fetch', startDate, endDate)
     try {
       const resp = await fetch(`https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=3wa5hHgFuqhf6XiefvqzkcDQWZ01aOOK4vNZEXsP`);
-      const reader = resp.body.getReader();
-      let done = false;
-      let valueString = ''
-      while (!done) {
-        const { value, done: doneReading } = await reader.read();
-        done = doneReading;
-        valueString = valueString + decoder.decode(value)
-      }
-      //all
-      const data = JSON.parse(valueString);
       //const data = await resp.json()
       //console.log('data', data)
+      const data = await StreamReader(resp)
       const list = data.near_earth_objects
       const dates = Object.keys(list)
       const arrObjects = Object.values(list)
@@ -329,17 +333,8 @@ app.get('/detail', cors(corsOptions), async (req, res, next) => {
   const id = req.query.id
   const resp = await fetch(`https://api.nasa.gov/neo/rest/v1/neo/${id}?api_key=3wa5hHgFuqhf6XiefvqzkcDQWZ01aOOK4vNZEXsP`);
   //console.log('status34', resp.status)
-  const reader = resp.body.getReader();
-  let done = false;
-  let valueString = ''
-  while (!done) {
-    const { value, done: doneReading } = await reader.read();
-    done = doneReading;
-    valueString = valueString + decoder.decode(value)
-  }
-  //all
-  const data = JSON.parse(valueString);
   //const data = await resp.json()
+  const data = await StreamReader(resp)
   //console.log('detail length', data.close_approach_data)
   const ids = [req.query.id]
   const query = await db.records.findByIds(ids)
