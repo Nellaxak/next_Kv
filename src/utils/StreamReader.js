@@ -1,4 +1,4 @@
-//var { Readable } = require('stream');
+var { Readable } = require('stream');
 
 async function StreamReader(resp) {
     const decoder = new TextDecoder();
