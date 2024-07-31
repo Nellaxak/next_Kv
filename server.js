@@ -1,12 +1,11 @@
 var express = require('express');
-var { Readable } = require('stream');
 //var serveStatic = require('serve-static');
 var cors = require('cors');
 var { Server } = require('socket.io');
 var { createRxDatabase, addRxPlugin } = require('rxdb');
 var { getRxStorageMemory } = require('rxdb/plugins/storage-memory')
 var { RxDBUpdatePlugin } = require('rxdb/plugins/update');
-
+var StreamReader = require('./src/utils/StreamReader.js')
 addRxPlugin(RxDBUpdatePlugin);
 
 const app = express();
@@ -196,20 +195,6 @@ class Counter {
     })
     //return { startDate, endDate }
   }
-}
-const decoder = new TextDecoder();
-async function StreamReader(resp) {
-  const reader = resp.body.getReader();
-  let done = false;
-  let valueString = ''
-  while (!done) {
-    const { value, done: doneReading } = await reader.read();
-    done = doneReading;
-    valueString = valueString + decoder.decode(value)
-  }
-  //all
-  const data = JSON.parse(valueString);
-  return data
 }
 io.on('connection', (socket) => {
   socket.on('stop', () => {
