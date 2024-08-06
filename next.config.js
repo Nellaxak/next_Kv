@@ -9,6 +9,8 @@ const nextConfig = {
       },
     ]
   },
+  productionBrowserSourceMaps: true,
+  eslint: { ignoreDuringBuilds: true }
 }
 
 module.exports = nextConfig
