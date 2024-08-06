@@ -1,0 +1,5 @@
+{
+  "buildCommand": "node server && next build",
+  "version": 2, 
+  "rewrites": [{ "source": "/(.*)", "destination": "/app" }]
+}
